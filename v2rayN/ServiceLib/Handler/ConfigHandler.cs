@@ -963,7 +963,7 @@ public class ConfigHandler
         {
             return -1;
         }
-        if (profileItem.Security.IsNotEmpty() && profileItem.Security != Global.None)
+        if (profileItem.Security.IsNullOrEmpty())
         {
             profileItem.Security = Global.None;
         }
@@ -1411,6 +1411,11 @@ public class ConfigHandler
         if (profileItem is null)
         {
             profileItem = V2rayFmt.ResolveFull(strData, subRemarks);
+        }
+        //Is Html Page
+        if (profileItem is null && HtmlPageFmt.IsHtmlPage(strData))
+        {
+            return -1;
         }
         //Is Clash configuration
         if (profileItem is null)
@@ -2262,6 +2267,7 @@ public class ConfigHandler
 
         return 0;
     }
+
     public static async Task<int> SaveFullConfigTemplate(Config config, FullConfigTemplateItem item)
     {
         if (item == null)

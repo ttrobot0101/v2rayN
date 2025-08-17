@@ -1329,7 +1329,7 @@ public class CoreConfigSingboxService
                 action = "resolve",
                 strategy = domainStrategy
             };
-            if (_config.RoutingBasicItem.DomainStrategy == "IPOnDemand")
+            if (_config.RoutingBasicItem.DomainStrategy == Global.IPOnDemand)
             {
                 singboxConfig.route.rules.Add(resolveRule);
             }
@@ -1351,7 +1351,7 @@ public class CoreConfigSingboxService
                     }
                 }
             }
-            if (_config.RoutingBasicItem.DomainStrategy == "IPIfNonMatch")
+            if (_config.RoutingBasicItem.DomainStrategy == Global.IPIfNonMatch)
             {
                 singboxConfig.route.rules.Add(resolveRule);
                 foreach (var item2 in ipRules)
@@ -1862,7 +1862,12 @@ public class CoreConfigSingboxService
                     }
                 }
             }
-            else if (item.OutboundTag == Global.ProxyTag)
+            else if (item.OutboundTag == Global.BlockTag)
+            {
+                rule.action = "predefined";
+                rule.rcode = "NXDOMAIN";
+            }
+            else
             {
                 if (simpleDNSItem.FakeIP == true)
                 {
@@ -1872,12 +1877,6 @@ public class CoreConfigSingboxService
                 }
                 rule.server = Global.SingboxRemoteDNSTag;
                 rule.strategy = string.IsNullOrEmpty(simpleDNSItem.SingboxStrategy4Proxy) ? null : simpleDNSItem.SingboxStrategy4Proxy;
-            }
-            else if (item.OutboundTag == Global.BlockTag)
-            {
-                rule.action = "predefined";
-                rule.rcode = "NOERROR";
-                rule.answer = new List<string> { "A" };
             }
 
             singboxConfig.dns.rules.Add(rule);
