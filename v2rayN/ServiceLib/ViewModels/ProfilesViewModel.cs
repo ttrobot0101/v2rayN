@@ -456,14 +456,7 @@ public class ProfilesViewModel : MyReactiveObject
         var orderProfiles = SelectedProfiles?.OrderBy(t => t.Sort);
         if (latest)
         {
-            foreach (var profile in orderProfiles)
-            {
-                var item = await AppManager.Instance.GetProfileItem(profile.IndexId);
-                if (item is not null)
-                {
-                    lstSelected.Add(item);
-                }
-            }
+            lstSelected.AddRange(await AppManager.Instance.GetProfileItemsOrderedByIndexIds(orderProfiles.Select(sp => sp?.IndexId)));
         }
         else
         {
@@ -764,18 +757,9 @@ public class ProfilesViewModel : MyReactiveObject
         }
 
         var (context, validatorResult) = await CoreConfigContextBuilder.Build(_config, item);
-        var msgs = new List<string>([..validatorResult.Errors, ..validatorResult.Warnings]);
-        if (msgs.Count > 0)
+        if (NoticeManager.Instance.NotifyValidatorResult(validatorResult) && !validatorResult.Success)
         {
-            foreach (var msg in msgs)
-            {
-                NoticeManager.Instance.SendMessage(msg);
-            }
-            NoticeManager.Instance.Enqueue(Utils.List2String(msgs.Take(10).ToList(), true));
-            if (!validatorResult.Success)
-            {
-                return;
-            }
+            return;
         }
 
         if (blClipboard)
@@ -804,18 +788,9 @@ public class ProfilesViewModel : MyReactiveObject
             return;
         }
         var (context, validatorResult) = await CoreConfigContextBuilder.Build(_config, item);
-        var msgs = new List<string>([..validatorResult.Errors, ..validatorResult.Warnings]);
-        if (msgs.Count > 0)
+        if (NoticeManager.Instance.NotifyValidatorResult(validatorResult) && !validatorResult.Success)
         {
-            foreach (var msg in msgs)
-            {
-                NoticeManager.Instance.SendMessage(msg);
-            }
-            NoticeManager.Instance.Enqueue(Utils.List2String(msgs.Take(10).ToList(), true));
-            if (!validatorResult.Success)
-            {
-                return;
-            }
+            return;
         }
         var result = await CoreConfigHandler.GenerateClientConfig(context, fileName);
         if (result.Success != true)
