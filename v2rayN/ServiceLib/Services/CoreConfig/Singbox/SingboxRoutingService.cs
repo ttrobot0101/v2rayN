@@ -96,6 +96,15 @@ public partial class CoreConfigSingboxService
                         new() { protocol = ["dns"] },
                     ],
                 });
+                if (_config.CoreBasicItem.EnableFinalFragment)
+                {
+                    _coreConfig.route.rules.Add(new()
+                    {
+                        protocol = ["tls"],
+                        action = "route-options",
+                        tls_record_fragment = true,
+                    });
+                }
             }
             else
             {
@@ -104,6 +113,14 @@ public partial class CoreConfigSingboxService
                     port = [53],
                     action = "hijack-dns",
                 });
+                if (_config.CoreBasicItem.EnableFinalFragment)
+                {
+                    _coreConfig.route.rules.Add(new()
+                    {
+                        action = "route-options",
+                        tls_record_fragment = true,
+                    });
+                }
             }
 
             var hostsDomains = new List<string>();
@@ -176,12 +193,12 @@ public partial class CoreConfigSingboxService
             _coreConfig.route.rules.Add(new()
             {
                 outbound = Global.DirectTag,
-                clash_mode = ERuleMode.Direct.ToString()
+                clash_mode = nameof(ERuleMode.Direct)
             });
             _coreConfig.route.rules.Add(new()
             {
                 outbound = Global.ProxyTag,
-                clash_mode = ERuleMode.Global.ToString()
+                clash_mode = nameof(ERuleMode.Global)
             });
 
             var domainStrategy = _config.RoutingBasicItem.DomainStrategy4Singbox.NullIfEmpty();

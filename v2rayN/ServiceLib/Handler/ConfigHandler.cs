@@ -39,15 +39,14 @@ public static class ConfigHandler
         {
             LogEnabled = false,
             Loglevel = "warning",
-            MuxEnabled = false,
         };
 
         if (config.Inbound == null)
         {
-            config.Inbound = new List<InItem>();
+            config.Inbound = [];
             InItem inItem = new()
             {
-                Protocol = EInboundProtocol.socks.ToString(),
+                Protocol = nameof(EInboundProtocol.socks),
                 LocalPort = 10808,
                 UdpEnabled = true,
                 SniffingEnabled = true,
@@ -60,7 +59,7 @@ public static class ConfigHandler
         {
             if (config.Inbound.Count > 0)
             {
-                config.Inbound.First().Protocol = EInboundProtocol.socks.ToString();
+                config.Inbound.First().Protocol = nameof(EInboundProtocol.socks);
             }
         }
 
@@ -99,8 +98,8 @@ public static class ConfigHandler
         config.MsgUIItem ??= new();
 
         config.UiItem ??= new();
-        config.UiItem.MainColumnItem ??= new();
-        config.UiItem.WindowSizeItem ??= new();
+        config.UiItem.MainColumnItem ??= [];
+        config.UiItem.WindowSizeItem ??= [];
 
         if (config.UiItem.CurrentLanguage.IsNullOrEmpty())
         {
@@ -158,7 +157,7 @@ public static class ConfigHandler
             DownMbps = 100
         };
         config.ClashUIItem ??= new();
-        config.ClashUIItem.ConnectionsColumnItem ??= new();
+        config.ClashUIItem.ConnectionsColumnItem ??= [];
         config.SystemProxyItem ??= new();
         config.WebDavItem ??= new();
         config.CheckUpdateItem ??= new();
@@ -168,7 +167,7 @@ public static class ConfigHandler
             Length = "50-100",
             Interval = "10-20"
         };
-        config.GlobalHotkeys ??= new();
+        config.GlobalHotkeys ??= [];
 
         if (config.SystemProxyItem.SystemProxyExceptions.IsNullOrEmpty())
         {
@@ -875,7 +874,7 @@ public static class ConfigHandler
         profileItem.Fingerprint = string.Empty;
         profileItem.Alpn = string.Empty;
         profileItem.Network = string.Empty;
-        profileItem.AllowInsecure = "false";
+        profileItem.AllowInsecure = string.Empty;
         if (profileItem.StreamSecurity.IsNullOrEmpty())
         {
             profileItem.StreamSecurity = Global.StreamSecurity;
@@ -1057,8 +1056,8 @@ public static class ConfigHandler
             return new Tuple<int, int>(0, 0);
         }
 
-        List<ProfileItem> lstKeep = new();
-        List<ProfileItem> lstRemove = new();
+        List<ProfileItem> lstKeep = [];
+        List<ProfileItem> lstRemove = [];
         if (!config.GuiItem.KeepOlderDedupl)
         {
             lstProfile.Reverse();
@@ -1107,10 +1106,6 @@ public static class ConfigHandler
             }
             else
             {
-                if (profileItem.AllowInsecure.IsNullOrEmpty())
-                {
-                    profileItem.AllowInsecure = config.CoreBasicItem.DefAllowInsecure.ToString().ToLower();
-                }
                 if (profileItem.Fingerprint.IsNullOrEmpty() && profileItem.StreamSecurity == Global.StreamSecurityReality)
                 {
                     profileItem.Fingerprint = config.CoreBasicItem.DefFingerprint;
@@ -1538,7 +1533,7 @@ public static class ConfigHandler
         }
 
         var countServers = 0;
-        List<ProfileItem> lstAdd = new();
+        List<ProfileItem> lstAdd = [];
         var arrData = strData.Split(Environment.NewLine.ToCharArray()).Where(t => !t.IsNullOrEmpty());
         if (isSub)
         {
@@ -1634,7 +1629,7 @@ public static class ConfigHandler
         {
             lstProfiles = V2rayFmt.ResolveFullArray(strData, subRemarks);
         }
-        if (lstProfiles != null && lstProfiles.Count > 0)
+        if (lstProfiles is { Count: > 0 })
         {
             var count = 0;
             foreach (var it in lstProfiles)

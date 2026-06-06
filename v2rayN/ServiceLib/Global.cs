@@ -90,6 +90,8 @@ public class Global
     public const string XrayLocalCert = "XRAY_LOCATION_CERT";
     public const int SpeedTestPageSize = 1000;
     public const string LinuxBash = "/bin/bash";
+    public const string StringTrue = "true";
+    public const string StringFalse = "false";
 
     public const string SingboxDirectDNSTag = "direct_dns";
     public const string SingboxRemoteDNSTag = "remote_dns";
@@ -330,12 +332,12 @@ public class Global
 
     public static readonly Dictionary<string, string> KcpHeaderMaskMap = new()
     {
-        { "srtp", "header-srtp" },
-        { "utp", "header-utp" },
-        { "wechat-video", "header-wechat" },
-        { "dtls", "header-dtls" },
-        { "wireguard", "header-wireguard" },
-        { "dns", "header-dns" }
+        { "srtp", "srtp" },
+        { "utp", "utp" },
+        { "wechat-video", "wechat" },
+        { "dtls", "dtls" },
+        { "wireguard", "wireguard" },
+        { "dns", "dns" }
     };
 
     public static readonly List<string> CoreTypes =
@@ -421,13 +423,6 @@ public class Global
         "stream-one"
     ];
 
-    public static readonly List<string> AllowInsecure =
-    [
-        "true",
-        "false",
-        ""
-    ];
-
     public static readonly List<string> DomainStrategy =
     [
         "AsIs",
@@ -478,7 +473,7 @@ public class Global
         "zh-Hans",
         "zh-Hant",
         "en",
-        "fa-Ir",
+        "fa",
         "fr",
         "ru",
         "hu"
