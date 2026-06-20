@@ -223,15 +223,6 @@ namespace ServiceLib.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Please fill in the correct IPv4 address for SendThrough. 的本地化字符串。
-        /// </summary>
-        public static string FillCorrectSendThroughIPv4 {
-            get {
-                return ResourceManager.GetString("FillCorrectSendThroughIPv4", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Please enter the correct port format. 的本地化字符串。
         /// </summary>
         public static string FillCorrectServerPort {
@@ -2077,6 +2068,15 @@ namespace ServiceLib.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Insecure configuration detected: AllowInsecure is enabled but no certificate is provided. This may cause MITM attacks. 的本地化字符串。
+        /// </summary>
+        public static string MsgInsecureConfiguration {
+            get {
+                return ResourceManager.GetString("MsgInsecureConfiguration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 The {0} property is invalid, please check 的本地化字符串。
         /// </summary>
         public static string MsgInvalidProperty {
@@ -3052,11 +3052,20 @@ namespace ServiceLib.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Enables process traffic hijacking (experimental), similar to Proxifer; can coexist with system proxy; conflicts with TUN mode, please do not enable them simultaneously; 的本地化字符串。
+        ///   查找类似 Enables process traffic hijacking (experimental), similar to Proxifer; can coexist with system proxy; conflicts with TUN mode, please do not enable them simultaneously;please allow v2rayN to use a private network in your firewall. 的本地化字符串。
         /// </summary>
         public static string TbEnableNetBridge {
             get {
                 return ResourceManager.GetString("TbEnableNetBridge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 DNS via Bridge 的本地化字符串。
+        /// </summary>
+        public static string TbEnabletDnsViaProxy {
+            get {
+                return ResourceManager.GetString("TbEnabletDnsViaProxy", resourceCulture);
             }
         }
         
@@ -3696,6 +3705,15 @@ namespace ServiceLib.Resx {
         public static string TbRuleTypeTips {
             get {
                 return ResourceManager.GetString("TbRuleTypeTips", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Save rules 的本地化字符串。
+        /// </summary>
+        public static string TbSaveNetBridgeRule {
+            get {
+                return ResourceManager.GetString("TbSaveNetBridgeRule", resourceCulture);
             }
         }
         
